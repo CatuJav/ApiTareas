@@ -14,6 +14,11 @@ builder.Services.AddSwaggerGen();
 var mySQLConfiguration = new MySQLConfiguration(builder.Configuration.GetConnectionString("MySqlConnection"));
 builder.Services.AddSingleton(mySQLConfiguration);
 builder.Services.AddScoped<IRolRepository,RolRepository>();
+builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
+builder.Services.AddScoped<IEstadoTareaRepository, EstadoTareaRepository>();
+builder.Services.AddScoped<ITareaRepository, TareaRepository>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+
 builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddDebug();
 
