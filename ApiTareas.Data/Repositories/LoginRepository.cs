@@ -14,13 +14,13 @@ namespace ApiTareas.Data.Repositories
 
         private static HttpClient sharedClient = new()
         {
-            BaseAddress = new Uri("https://jsonplaceholder.typicode.com/"),
+            BaseAddress = new Uri("http://192.168.11.218/API_AD/api/v1/auth/"),
         };
         public async Task<bool> login(Credenciales credenciales)
         {
             //Consumir sericio de url post pasandole el parametro de usuario y contrasena
 
-            var response = await sharedClient.PostAsync("/posts", new StringContent(JsonSerializer.Serialize(new { usuario = credenciales.usuario, contrasena = credenciales.contrasena }), Encoding.UTF8, "application/json"));
+            var response = await sharedClient.PostAsync("ActiveDirectory", new StringContent(JsonSerializer.Serialize(new { username = credenciales.usuario, password = credenciales.contrasena }), Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
