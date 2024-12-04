@@ -9,10 +9,10 @@ namespace ApiTareas.Data.Repositories
 {
     public interface IUsuarioRepository
     {
-        Task<IEnumerable<Usuario>> obtenerUsuarios();
-        Task<Usuario> obtenerUsuariosPorId(int id);
-        Task<bool> crearUsuario(Usuario usuario);
-        Task<bool> actualizarUsuario(Usuario usuario);
-        Task<bool> eliminarUsuario(Usuario usuario);
+        Task<IEnumerable<UsuarioMS>> obtenerUsuarios();
+        Task<UsuarioMS> obtenerUsuariosPorId(int id);
+        Task<bool> crearUsuario(UsuarioME usuario);
+        Task<bool> actualizarUsuario(UsuarioME usuario);
+        Task<bool> eliminarUsuario(UsuarioME usuario);
     }
 }

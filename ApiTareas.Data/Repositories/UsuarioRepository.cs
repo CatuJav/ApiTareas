@@ -23,7 +23,7 @@ namespace ApiTareas.Data.Repositories
             return new MySqlConnection(_configuration.ConnectionString);
         }
 
-        public async Task<bool> actualizarUsuario(Usuario usuario)
+        public async Task<bool> actualizarUsuario(UsuarioME usuario)
         {
             var db = dbConnection();
             var sql = @"UPDATE USUARIO
@@ -36,7 +36,7 @@ namespace ApiTareas.Data.Repositories
             
         }
 
-        public async Task<bool> crearUsuario(Usuario usuario)
+        public async Task<bool> crearUsuario(UsuarioME usuario)
         {
             var db = dbConnection();
             var sql = @"INSERT INTO USUARIO(USUARIOAD, IDROL) VALUES(@UsuarioAD, @IdRol)";
@@ -45,7 +45,7 @@ namespace ApiTareas.Data.Repositories
             return result > 0;
         }
 
-        public async Task<bool> eliminarUsuario(Usuario usuario)
+        public async Task<bool> eliminarUsuario(UsuarioME usuario)
         {
             var db = dbConnection();
             var sql = @"DELETE FROM USUARIO
@@ -55,18 +55,18 @@ namespace ApiTareas.Data.Repositories
             return result > 0;
         }
 
-        public async Task<IEnumerable<Usuario>> obtenerUsuarios()
+        public async Task<IEnumerable<UsuarioMS>> obtenerUsuarios()
         {
             var db = dbConnection();
             var sql = @"SELECT * FROM USUARIO";
-            return await db.QueryAsync<Usuario>(sql, new { });
+            return await db.QueryAsync<UsuarioMS>(sql, new { });
         }
 
-        public async Task<Usuario> obtenerUsuariosPorId(int id)
+        public async Task<UsuarioMS> obtenerUsuariosPorId(int id)
         {
             var db = dbConnection();
             var sql = @"SELECT * FROM USUARIO WHERE id = @Id";
-            return await db.QueryFirstOrDefaultAsync<Usuario>(sql, new { Id = id });
+            return await db.QueryFirstOrDefaultAsync<UsuarioMS>(sql, new { Id = id });
         }
     }
 }

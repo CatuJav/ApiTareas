@@ -29,7 +29,7 @@ namespace ApiTareas.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> CrearUsuario([FromBody] UsuarioME usuario)
         {
             if(usuario == null)
             {
@@ -47,7 +47,7 @@ namespace ApiTareas.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> ActualizarUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> ActualizarUsuario([FromBody] UsuarioME usuario)
         {
             if(usuario == null)
             {
@@ -65,7 +65,7 @@ namespace ApiTareas.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> EliminarUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> EliminarUsuario([FromBody] UsuarioME usuario)
         {
             if(usuario == null)
             {

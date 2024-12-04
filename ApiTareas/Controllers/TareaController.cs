@@ -29,7 +29,7 @@ namespace ApiTareas.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearTarea([FromBody] Tarea tarea)
+        public async Task<IActionResult> CrearTarea([FromBody] TareaME tarea)
         {
             if (tarea == null)
             {
@@ -47,7 +47,7 @@ namespace ApiTareas.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> ActualizarTarea([FromBody] Tarea tarea)
+        public async Task<IActionResult> ActualizarTarea([FromBody] TareaME tarea)
         {
             if (tarea == null)
             {
@@ -65,7 +65,7 @@ namespace ApiTareas.Controllers
         public async Task<IActionResult> EliminarTarea(int id)
         {
           
-            await _tareaRepository.eliminarTarea(new Tarea { Id =id});
+            await _tareaRepository.eliminarTarea(new TareaME { Id =id});
             return NoContent();
         }
     }

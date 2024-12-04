@@ -9,11 +9,11 @@ namespace ApiTareas.Data.Repositories
 {
     public interface ITareaRepository
     {
-        Task<IEnumerable<Tarea>> obtenerTareas();
-        Task<Tarea> obtenerTareaPorId(int id);
-        Task<bool> crearTarea(Tarea tarea);
-        Task<bool> actualizarTarea(Tarea tarea);
-        Task<bool> eliminarTarea(Tarea tarea);
+        Task<IEnumerable<TareaMS>> obtenerTareas();
+        Task<TareaMS> obtenerTareaPorId(int id);
+        Task<bool> crearTarea(TareaME tarea);
+        Task<bool> actualizarTarea(TareaME tarea);
+        Task<bool> eliminarTarea(TareaME tarea);
     }
 
 }
