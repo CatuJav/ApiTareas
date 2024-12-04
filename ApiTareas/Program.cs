@@ -18,6 +18,7 @@ builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
 builder.Services.AddScoped<IEstadoTareaRepository, EstadoTareaRepository>();
 builder.Services.AddScoped<ITareaRepository, TareaRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
 
 builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddDebug();
