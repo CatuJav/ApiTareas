@@ -27,9 +27,9 @@ namespace ApiTareas.Data.Repositories
         {
             var db = dbConnection();
             var sql = @"UPDATE USUARIO
-                        SET USUARIOAD = @UsuarioAD, IDROL = @IdRol
+                        SET USUARIOAD = @UsuarioAD, IDROL = @IdRol, IDDEPARTAMENTO = @IdDepartamento
                         WHERE ID = @Id";
-            var result = await db.ExecuteAsync(sql, new { UsuarioAD = usuario.UsuarioAD, IdRol = usuario.IdRol, Id = usuario.Id });
+            var result = await db.ExecuteAsync(sql, new { UsuarioAD = usuario.UsuarioAD, IdRol = usuario.IdRol, Id = usuario.Id, IDDEPARTAMENTO= usuario.IdDepartamento });
 
             return result > 0;
 
@@ -39,8 +39,8 @@ namespace ApiTareas.Data.Repositories
         public async Task<bool> crearUsuario(UsuarioME usuario)
         {
             var db = dbConnection();
-            var sql = @"INSERT INTO USUARIO(USUARIOAD, IDROL) VALUES(@UsuarioAD, @IdRol)";
-            var result = await db.ExecuteAsync(sql, new { UsuarioAD = usuario.UsuarioAD, IdRol = usuario.IdRol });
+            var sql = @"INSERT INTO USUARIO(USUARIOAD, IDROL, IDDEPARTAMENTO) VALUES(@UsuarioAD, @IdRol, @IdDepartamento)";
+            var result = await db.ExecuteAsync(sql, new { USUARIOAD = usuario.UsuarioAD, IDROL = usuario.IdRol, IDDEPARTAMENTO = usuario.IdDepartamento });
 
             return result > 0;
         }

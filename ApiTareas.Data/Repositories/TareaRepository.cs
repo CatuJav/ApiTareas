@@ -51,9 +51,10 @@ namespace ApiTareas.Data.Repositories
         {
             var db = dbConnection();
             var sql = @"INSERT INTO TAREA(TITULO, DESCRIPCION, HORA, FECHA, IDESTADO) VALUES(@Titulo, @Descripcion, @Hora, @Fecha, @IdEstado)";
-            var result = db.ExecuteReader(sql, new { Titulo = tarea.Titulo, Descripcion = tarea.Descripcion, HORA = tarea.Hora, Fecha = tarea.Fecha, IdEstado = tarea.IdEstado });
+            var result = db.Execute(sql, new { Titulo = tarea.Titulo, Descripcion = tarea.Descripcion, HORA = tarea.Hora, Fecha = tarea.Fecha, IdEstado = tarea.IdEstado });
 
-            //int id = db.
+            //last inserted id
+            var id = db.Query<int>("SELECT LAST_INSERT_ID()").Single();
 
             //Insertar los usuarios asignados a la tarea
             if (tarea.IdUsuarios != null)
@@ -61,12 +62,12 @@ namespace ApiTareas.Data.Repositories
                 foreach (var idUsuario in tarea.IdUsuarios)
                 {
                     var sqlUsuario = @"INSERT INTO TAREAUSUARIO(IDTAREA, IDUSUARIO) VALUES(@IdTarea, @IdUsuario)";
-                    var resultUsuario = db.Execute(sqlUsuario, new { IdTarea = tarea.Id, IdUsuario = idUsuario });
+                    var resultUsuario = db.Execute(sqlUsuario, new { IdTarea = id, IdUsuario = idUsuario });
                 }
             }
 
 
-            return result != null;
+            return result > 0;
         }
 
         public async Task<bool> eliminarTarea(TareaME tarea)

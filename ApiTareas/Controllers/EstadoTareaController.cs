@@ -62,9 +62,9 @@ namespace ApiTareas.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> EliminarEstadoTarea([FromBody] EstadoTarea estado)
+        public async Task<IActionResult> EliminarEstadoTarea(int id)
         {
-        await _estadoTareaRepository.eliminarEstadoTarea(new EstadoTarea { Id = estado.Id });
+        await _estadoTareaRepository.eliminarEstadoTarea(new EstadoTarea { Id = id });
             return NoContent();
         }
         }

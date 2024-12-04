@@ -26,7 +26,7 @@ namespace ApiTareas.Data.Repositories
                         SET ESTADO = @Estado
                         WHERE ID = @Id"
             ;
-            var result = await db.ExecuteAsync(sql, new { Nombre = estado.Estado, Id = estado.Id });
+            var result = await db.ExecuteAsync(sql, new { ESTADO = estado.Estado, Id = estado.Id });
             return result > 0;
         }
 
