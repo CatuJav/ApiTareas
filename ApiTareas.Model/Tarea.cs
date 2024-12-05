@@ -14,6 +14,7 @@ namespace ApiTareas.Model
         public DateTime Fecha { get; set; }
         public DateTime Hora { get; set; }
         public int IdEstado { get; set; }
+        
     }
 
     public class TareaME

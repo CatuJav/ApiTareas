@@ -29,7 +29,7 @@ namespace ApiTareas.Data.Repositories
         {
            var db = dbConnection();
             var sql = @"UPDATE TAREA
-                        SET TITULO = @Nombre, DESCRIPCION = @Descripcion, HORA= @Hora, FECHA = @Fecha, IDESTADO = @IdEstado
+                        SET TITULO = @Titulo, DESCRIPCION = @Descripcion, HORA= @Hora, FECHA = @Fecha, IDESTADO = @IdEstado
                         WHERE ID = @Id";
             var result = await db.ExecuteAsync(sql, new { TITULO = tarea.Titulo, DESCRIPCION = tarea.Descripcion, HORA = tarea.Hora, FECHA = tarea.Fecha, IDESTADO = tarea.IdEstado, Id = tarea.Id });
 
