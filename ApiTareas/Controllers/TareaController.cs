@@ -10,10 +10,12 @@ namespace ApiTareas.Controllers
     public class TareaController : ControllerBase
     {
         private readonly ITareaRepository _tareaRepository;
+        private readonly IArchivoRepository _archivoRepository;
 
-        public TareaController(ITareaRepository tareaRepository)
+        public TareaController(ITareaRepository tareaRepository, IArchivoRepository archivoRepository)
         {
             _tareaRepository = tareaRepository;
+            _archivoRepository = archivoRepository;
         }
 
         [HttpGet]
@@ -41,9 +43,9 @@ namespace ApiTareas.Controllers
                 return BadRequest(ModelState);
             }
 
-            var creado = await _tareaRepository.crearTarea(tarea);
+            int creado = await _tareaRepository.crearTarea(tarea);
 
-            return Ok("Tarea creada correctamente" + creado);
+            return Ok(creado);
         }
 
         [HttpPut]
@@ -67,6 +69,60 @@ namespace ApiTareas.Controllers
           
             await _tareaRepository.eliminarTarea(new TareaME { Id =id});
             return NoContent();
+        }
+
+        [HttpGet("tareaUsuario")]
+        public async Task<IEnumerable<TareaUsuarioMS>> tareaUsuarios(int idTarea)
+        {
+            return await _tareaRepository.tareaUsuarios(idTarea);
+        }
+
+        [HttpPost("subir")]
+   
+        public async Task<IActionResult> Upload()
+        {
+            try
+            {
+                var formFile = Request.Form.Files[0]; // Obtiene el archivo del formulario
+                int idTarea = int.Parse(Request.Form["idTarea"]);
+
+                if (formFile == null || formFile.Length == 0)
+                {
+                    return BadRequest("No se ha seleccionado ningún archivo.");
+                }
+
+                if (formFile.ContentType != "application/pdf")
+                {
+                    return BadRequest("Solo se aceptan archivos PDF.");
+                }
+
+                if (formFile.Length > 10 * 1024 * 1024) // Ejemplo: Limite de 10MB
+                {
+                    return BadRequest("El archivo excede el tamaño permitido (10MB).");
+                }
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await formFile.CopyToAsync(memoryStream);
+                    var archivo = new Archivo
+                    {
+                        Nombre = formFile.FileName,
+                        Tipo = formFile.ContentType,
+                        Datos = memoryStream.ToArray(),
+                        IdTarea = idTarea
+                    };
+
+                  await _archivoRepository.subir(archivo);
+
+
+                    return Ok("Archivo subido correctamente.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
         }
     }
 }

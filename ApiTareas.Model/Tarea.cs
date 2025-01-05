@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiTareas.Model
 {
+    
     public class TareaMS
     {
         public int Id { get; set; }
@@ -16,7 +17,29 @@ namespace ApiTareas.Model
         public int IdEstado { get; set; }
         
     }
+    
 
+    public class TareaResumenMS {
+
+        private DateTime _fecha;
+        public int IdTarea { get; set; }
+        public string Titulo { get; set; }
+        public string Descripcion { get; set; }
+        public DateTime Fecha {get; set;}
+        public DateTime Hora { get; set; }
+        public int IdEstado { get; set; }
+        public string NombreEstado { get; set; }
+        public string NombreArchivo { get; set; }
+        public string Tipo { get; set; }
+        public int Progreso { get; set; }
+
+    }
+
+    public class TareaUsuarioMS
+    {
+        public int idTarea { get; set; }
+        public int idUsuario { get; set; }
+    }
     public class TareaME
     {
         public int Id { get; set; }

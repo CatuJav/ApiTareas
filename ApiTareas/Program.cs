@@ -1,5 +1,6 @@
 using ApiTareas.Data;
 using ApiTareas.Data.Repositories;
+using Microsoft.AspNetCore.Http.Features;
 using MySql.Data.MySqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IEstadoTareaRepository, EstadoTareaRepository>();
 builder.Services.AddScoped<ITareaRepository, TareaRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+builder.Services.AddScoped<IArchivoRepository, ArchivoRepository>();
 
 builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddDebug();
@@ -34,6 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(app => app.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseAuthorization();
 
 app.MapControllers();

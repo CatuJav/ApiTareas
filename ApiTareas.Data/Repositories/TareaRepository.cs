@@ -47,7 +47,7 @@ namespace ApiTareas.Data.Repositories
             return result > 0;
         }
 
-        public async Task<bool> crearTarea(TareaME tarea)
+        public async Task<int> crearTarea(TareaME tarea)
         {
             var db = dbConnection();
             var sql = @"INSERT INTO TAREA(TITULO, DESCRIPCION, HORA, FECHA, IDESTADO) VALUES(@Titulo, @Descripcion, @Hora, @Fecha, @IdEstado)";
@@ -67,7 +67,7 @@ namespace ApiTareas.Data.Repositories
             }
 
 
-            return result > 0;
+            return result > 0 ? id :0;
         }
 
         public async Task<bool> eliminarTarea(TareaME tarea)
@@ -94,11 +94,36 @@ namespace ApiTareas.Data.Repositories
             return db.QueryFirstOrDefaultAsync<TareaMS>(sql, new { Id = id });
         }
 
-        public Task<IEnumerable<TareaMS>> obtenerTareas()
+        
+
+        public Task<IEnumerable<TareaResumenMS>> obtenerTareas()
         {
             var db = dbConnection();
-            var sql = @"SELECT * FROM TAREA";
-            return db.QueryAsync<TareaMS>(sql, new { });
+            var sql = @"SELECT 
+                        T.ID IDTAREA,
+                        T.TITULO,
+                        T.DESCRIPCION,
+                        T.FECHA,
+                        T.HORA ,
+                        E2.ID IDESTADO,
+                        E2.ESTADO NOMBREESTADO,
+                        A.NOMBRE NOMBREARCHIVO,
+                        A.TIPO,
+                        T.PROGRESO 
+                        FROM TAREA T
+                        inner join estadotarea  E2  on T.IDESTADO = E2.ID 
+                        left join archivos A on A.IDTAREA = T.ID";
+            return db.QueryAsync<TareaResumenMS>(sql, new { });
+        }
+
+        public Task<IEnumerable<TareaUsuarioMS>> tareaUsuarios(int idTarea)
+        {
+           var db = dbConnection();
+            var sql = @"SELECT 
+                        *
+                        FROM TAREAUSUARIO TU
+                        WHERE TU.IDTAREA = @IdTarea";
+            return db.QueryAsync<TareaUsuarioMS>(sql, new { IdTarea = idTarea });
         }
     }
 }
