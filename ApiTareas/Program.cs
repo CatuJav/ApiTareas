@@ -21,6 +21,7 @@ builder.Services.AddScoped<ITareaRepository, TareaRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
 builder.Services.AddScoped<IArchivoRepository, ArchivoRepository>();
+builder.Services.AddScoped<IComentarioRepository, ComentarioRepository>();
 
 builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddDebug();
