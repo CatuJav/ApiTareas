@@ -29,9 +29,9 @@ namespace ApiTareas.Data.Repositories
         {
            var db = dbConnection();
             var sql = @"UPDATE TAREA
-                        SET TITULO = @Titulo, DESCRIPCION = @Descripcion, HORA= @Hora, FECHA = @Fecha, IDESTADO = @IdEstado
+                        SET TITULO = @Titulo, DESCRIPCION = @Descripcion, HORA= @Hora, FECHA = @Fecha, IDESTADO = @IdEstado, PROGRESO= @Progreso
                         WHERE ID = @Id";
-            var result = await db.ExecuteAsync(sql, new { TITULO = tarea.Titulo, DESCRIPCION = tarea.Descripcion, HORA = tarea.Hora, FECHA = tarea.Fecha, IDESTADO = tarea.IdEstado, Id = tarea.Id });
+            var result = await db.ExecuteAsync(sql, new { TITULO = tarea.Titulo, DESCRIPCION = tarea.Descripcion, HORA = tarea.Hora, FECHA = tarea.Fecha, IDESTADO = tarea.IdEstado, PROGRESO = tarea.Progreso  });
 
             //Insertar los usuarios asignados a la tarea
             if (tarea.IdUsuarios != null)
