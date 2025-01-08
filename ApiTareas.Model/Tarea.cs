@@ -15,7 +15,8 @@ namespace ApiTareas.Model
         public DateTime Fecha { get; set; }
         public DateTime Hora { get; set; }
         public int IdEstado { get; set; }
-        
+        public int Progreso { get; set; }
+
     }
     
 
@@ -49,6 +50,7 @@ namespace ApiTareas.Model
         //Hora de tipo time
         public DateTime Hora { get; set; }
         public int IdEstado { get; set; }
+        public int Progreso { get; set; }
         public int[] IdUsuarios { get; set; }
     }
 }
