@@ -13,6 +13,7 @@ namespace ApiTareas.Data.Repositories
         Task<TareaMS> obtenerTareaPorId(int id);
         Task<int> crearTarea(TareaME tarea);
         Task<bool> actualizarTarea(TareaME tarea);
+        Task<bool> actualizarProgresoTarea(TareaProgresoME id);
         Task<bool> eliminarTarea(TareaME tarea);
         Task<IEnumerable<TareaUsuarioMS>> tareaUsuarios(int idTarea);
     }

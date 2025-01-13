@@ -10,6 +10,8 @@ namespace ApiTareas.Model
 {
     public class LoginResp
     {
+        [JsonProperty("Status")]
+        public int Status { get; set; }
 
         [JsonProperty("GivenName")]
         public string GivenName { get; set; }

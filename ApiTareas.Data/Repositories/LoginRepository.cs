@@ -14,32 +14,35 @@ namespace ApiTareas.Data.Repositories
 
         private static HttpClient sharedClient = new()
         {
-            BaseAddress = new Uri("http://192.168.11.218/API_AD/api/v1/auth/"),
+            BaseAddress = new Uri("http://192.168.0.105/API_AD/api/v1/auth/"),
         };
-        public async Task<bool> login(Credenciales credenciales)
+        public async Task<LoginResp> login(Credenciales credenciales)
         {
             //Consumir sericio de url post pasandole el parametro de usuario y contrasena
-
+            LoginResp login = new LoginResp();
             var response = await sharedClient.PostAsync("ActiveDirectory", new StringContent(JsonSerializer.Serialize(new { username = credenciales.usuario, password = credenciales.contrasena }), Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
                 var responseStream = await response.Content.ReadAsStringAsync();
-                var login = JsonSerializer.Deserialize<LoginResp>(responseStream);
+                login = JsonSerializer.Deserialize<LoginResp>(responseStream);
                 
                 if (login.Certificates.Length!=0)
                 {
-                    return true;
+                    login.Status = 200;
+                    return login;
                 }
                 else
                 {
-                    return false;
+                    login.Status = 401;
+                    return login;
                 }
 
 
             }else
             {
-                return false;
+                login.Status = response.StatusCode.GetHashCode();
+                return login;
             }
 
         }

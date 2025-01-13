@@ -53,4 +53,10 @@ namespace ApiTareas.Model
         public int Progreso { get; set; }
         public int[] IdUsuarios { get; set; }
     }
+
+    public class TareaProgresoME
+    {
+        public int IdTarea { get; set; }
+        public int Progreso { get; set; }
+    }
 }

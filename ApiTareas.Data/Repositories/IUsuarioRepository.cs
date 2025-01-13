@@ -11,6 +11,7 @@ namespace ApiTareas.Data.Repositories
     {
         Task<IEnumerable<UsuarioMS>> obtenerUsuarios();
         Task<UsuarioMS> obtenerUsuariosPorId(int id);
+        Task<UsuarioMS> obtenerUnoUsuarioPorNombre(string usuario);
         Task<bool> crearUsuario(UsuarioME usuario);
         Task<bool> actualizarUsuario(UsuarioME usuario);
         Task<bool> eliminarUsuario(UsuarioME usuario);

@@ -28,6 +28,12 @@ namespace ApiTareas.Controllers
             return Ok(await _usuarioRepository.obtenerUsuariosPorId(id));
         }
 
+        [HttpGet("nombre/{usuario}")]
+        public async Task<IActionResult> ObtenerUsuarioPorNombre(string usuario)
+        {
+            return Ok(await _usuarioRepository.obtenerUnoUsuarioPorNombre(usuario));
+        }
+
         [HttpPost]
         public async Task<IActionResult> CrearUsuario([FromBody] UsuarioME usuario)
         {

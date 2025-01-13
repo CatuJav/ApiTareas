@@ -9,6 +9,6 @@ namespace ApiTareas.Data.Repositories
 {
     public interface ILoginRepository
     {
-        Task<bool> login(Credenciales credenciales);
+        Task<LoginResp> login(Credenciales credenciales);
     }
 }

@@ -27,24 +27,33 @@ namespace ApiTareas.Data.Repositories
 
         public async Task<bool> actualizarTarea(TareaME tarea)
         {
-           var db = dbConnection();
-            var sql = @"UPDATE TAREA
+            try
+            {
+                var db = dbConnection();
+                var sql = @"UPDATE TAREA
                         SET TITULO = @Titulo, DESCRIPCION = @Descripcion, HORA= @Hora, FECHA = @Fecha, IDESTADO = @IdEstado, PROGRESO= @Progreso
                         WHERE ID = @Id";
-            var result = await db.ExecuteAsync(sql, new { TITULO = tarea.Titulo, DESCRIPCION = tarea.Descripcion, HORA = tarea.Hora, FECHA = tarea.Fecha, IDESTADO = tarea.IdEstado, PROGRESO = tarea.Progreso  });
+                var result = await db.ExecuteAsync(sql, new {Id= tarea.Id,  TITULO = tarea.Titulo, DESCRIPCION = tarea.Descripcion, HORA = tarea.Hora, FECHA = tarea.Fecha, IDESTADO = tarea.IdEstado, PROGRESO = tarea.Progreso });
 
-            //Insertar los usuarios asignados a la tarea
-            if (tarea.IdUsuarios != null)
-            {
-                foreach (var idUsuario in tarea.IdUsuarios)
+                //Insertar los usuarios asignados a la tarea
+                if (tarea.IdUsuarios != null)
                 {
-                    var sqlUsuario = @"INSERT INTO TAREAUSUARIO(IDTAREA, IDUSUARIO) VALUES(@IdTarea, @IdUsuario)";
-                    var resultUsuario = await db.ExecuteAsync(sqlUsuario, new { IdTarea = tarea.Id, IdUsuario = idUsuario });
+                    foreach (var idUsuario in tarea.IdUsuarios)
+                    {
+                        var sqlUsuario = @"INSERT INTO TAREAUSUARIO(IDTAREA, IDUSUARIO) VALUES(@IdTarea, @IdUsuario)";
+                        var resultUsuario = await db.ExecuteAsync(sqlUsuario, new { IdTarea = tarea.Id, IdUsuario = idUsuario });
+                    }
                 }
-            }
 
-            db.Close();
-            return result > 0;
+                db.Close();
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+          
         }
 
         public async Task<int> crearTarea(TareaME tarea)
@@ -124,6 +133,17 @@ namespace ApiTareas.Data.Repositories
                         FROM TAREAUSUARIO TU
                         WHERE TU.IDTAREA = @IdTarea";
             return db.QueryAsync<TareaUsuarioMS>(sql, new { IdTarea = idTarea });
+        }
+
+        public async Task<bool> actualizarProgresoTarea(TareaProgresoME tarea)
+        {
+            var db = dbConnection();
+            var sql = @"UPDATE TAREA
+                        SET PROGRESO= @Progreso
+                        WHERE ID = @Id";
+            var result = await db.ExecuteAsync(sql, new { ID = tarea.IdTarea,  PROGRESO = tarea.Progreso });
+            return result > 0;
+
         }
     }
 }

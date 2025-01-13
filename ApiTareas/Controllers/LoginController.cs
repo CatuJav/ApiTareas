@@ -29,9 +29,13 @@ namespace ApiTareas.Controllers
                 return BadRequest(ModelState);
             }
 
-            var creado = await _loginRepository.login(credenciales);
+            var login = await _loginRepository.login(credenciales);
 
-            return Ok("Login correcto" + creado);
+            if (login == null) {
+                return Unauthorized();
+            }
+
+            return Ok(login);
         }
     }
 }

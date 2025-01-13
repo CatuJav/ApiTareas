@@ -63,6 +63,23 @@ namespace ApiTareas.Controllers
             await _tareaRepository.actualizarTarea(tarea);
             return Ok("Tarea actualizada correctamente");
         }
+
+        [HttpPut("progreso")]
+        public async Task<IActionResult> ActualizarProgresoTarea([FromBody] TareaProgresoME tarea)
+        {
+            if (tarea == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _tareaRepository.actualizarProgresoTarea(tarea);
+            return Ok("Progreso actualizado correctamente");
+        }
+
         [HttpDelete]
         public async Task<IActionResult> EliminarTarea(int id)
         {

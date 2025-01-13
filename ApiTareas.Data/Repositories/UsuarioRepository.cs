@@ -68,5 +68,12 @@ namespace ApiTareas.Data.Repositories
             var sql = @"SELECT * FROM USUARIO WHERE id = @Id";
             return await db.QueryFirstOrDefaultAsync<UsuarioMS>(sql, new { Id = id });
         }
+
+        public async Task<UsuarioMS> obtenerUnoUsuarioPorNombre(string usuario)
+        {
+            var db = dbConnection();
+            var sql = @"SELECT * FROM USUARIO WHERE USUARIOAD = @USUARIOAD LIMIT 1";
+            return await db.QueryFirstOrDefaultAsync<UsuarioMS>(sql, new { USUARIOAD = usuario });
+        }
     }
 }
