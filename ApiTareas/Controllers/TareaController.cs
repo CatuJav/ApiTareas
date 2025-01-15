@@ -83,8 +83,8 @@ namespace ApiTareas.Controllers
         [HttpDelete]
         public async Task<IActionResult> EliminarTarea(int id)
         {
-          
-            await _tareaRepository.eliminarTarea(new TareaME { Id =id});
+
+            await _tareaRepository.eliminarTarea(new TareaME { Id = id });
             return NoContent();
         }
 
@@ -95,7 +95,7 @@ namespace ApiTareas.Controllers
         }
 
         [HttpPost("subir")]
-   
+
         public async Task<IActionResult> Upload()
         {
             try
@@ -130,11 +130,66 @@ namespace ApiTareas.Controllers
                         IdTarea = idTarea
                     };
 
-                  await _archivoRepository.subir(archivo);
+                    await _archivoRepository.subir(archivo);
 
 
                     return Ok("Archivo subido correctamente.");
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpPost("firmarPDF")]
+        public async Task<IActionResult> FirmarPDF(int idArchivo, string contrasenaFirma, string rutaFirma)
+        {
+            try
+            {
+                var ruta = Path.Combine(Directory.GetCurrentDirectory());
+                var firmado = await _archivoRepository.firmarPDF(idArchivo, ruta, contrasenaFirma, rutaFirma);
+
+                if (firmado)
+                {
+                    return Ok("PDF firmado correctamente.");
+                }
+                else
+                {
+                    return BadRequest("Error al firmar el PDF.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+        [HttpPost("subirFirma")]
+        public async Task<IActionResult> SubirFirma()
+        {
+            try
+            {
+                var formFile = Request.Form.Files[0]; // Obtiene el archivo del formulario
+
+                if (formFile == null || formFile.Length == 0)
+                {
+                    return BadRequest("No se ha seleccionado ningún archivo.");
+                }
+
+                if (formFile.ContentType != "application/pdf")
+                {
+                    return BadRequest("Solo se aceptan archivos PDF.");
+                }
+
+                if (formFile.Length > 10 * 1024 * 1024) // Ejemplo: Limite de 10MB
+                {
+                    return BadRequest("El archivo excede el tamaño permitido (10MB).");
+
+                }
+
+                string rutaFirma = _archivoRepository.subirFirma(formFile);
+                return Ok(rutaFirma);
             }
             catch (Exception ex)
             {

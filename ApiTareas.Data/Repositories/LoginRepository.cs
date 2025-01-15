@@ -14,7 +14,7 @@ namespace ApiTareas.Data.Repositories
 
         private static HttpClient sharedClient = new()
         {
-            BaseAddress = new Uri("http://192.168.0.105/API_AD/api/v1/auth/"),
+            BaseAddress = new Uri("http://192.168.0.103/API_AD/api/v1/auth/"),
         };
         public async Task<LoginResp> login(Credenciales credenciales)
         {
@@ -27,21 +27,21 @@ namespace ApiTareas.Data.Repositories
                 var responseStream = await response.Content.ReadAsStringAsync();
                 login = JsonSerializer.Deserialize<LoginResp>(responseStream);
                 
-                if (login.Certificates.Length!=0)
+                if (login.Principal.Certificates.Length!=0)
                 {
-                    login.Status = 200;
+                    login.Principal.Status = 200;
                     return login;
                 }
                 else
                 {
-                    login.Status = 401;
+                    login.Principal.Status = 401;
                     return login;
                 }
 
 
             }else
             {
-                login.Status = response.StatusCode.GetHashCode();
+                login.Principal.Status = response.StatusCode.GetHashCode();
                 return login;
             }
 

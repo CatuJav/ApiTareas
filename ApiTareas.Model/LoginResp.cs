@@ -8,11 +8,19 @@ using System.Threading.Tasks;
 
 namespace ApiTareas.Model
 {
-    public class LoginResp
+    public partial class LoginResp
+    {
+        [JsonProperty("Principal")]
+        public Principal Principal { get; set; }
+
+        [JsonProperty("MiembrosDe")]
+        public string[] MiembrosDe { get; set; }
+    }
+
+    public partial class Principal
     {
         [JsonProperty("Status")]
         public int Status { get; set; }
-
         [JsonProperty("GivenName")]
         public string GivenName { get; set; }
 
@@ -74,7 +82,7 @@ namespace ApiTareas.Model
         public DateTimeOffset LastPasswordSet { get; set; }
 
         [JsonProperty("LastBadPasswordAttempt")]
-        public object LastBadPasswordAttempt { get; set; }
+        public DateTimeOffset LastBadPasswordAttempt { get; set; }
 
         [JsonProperty("PasswordNotRequired")]
         public bool PasswordNotRequired { get; set; }
@@ -124,6 +132,7 @@ namespace ApiTareas.Model
         [JsonProperty("Name")]
         public string Name { get; set; }
     }
+
     public partial class AdvancedSearchFilter
     {
     }
